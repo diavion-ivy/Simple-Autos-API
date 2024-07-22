@@ -113,6 +113,17 @@ public class AutoControllerTests {
 
     // returns error messages due to bad request (400)
 
+    @Test
+    void addAuto_badRequ_returns400() throws Exception {
+        when(autosService.addAuto(any(Automobile.class))).thenThrow(InvalidAutoException.class);
+        String json = "{\"year\":1967,\"make\":\"Ford\",\"model\":\"Mustang\",\"color\":null,\"owner\":null,\"vin\":\"AA88CC\"}";
+        mockMvc.perform(post("/api/autos").contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+
     //GET: /api/autos{vin}
     // return requested automobile
     // returns NoContent(204) Auto not found
