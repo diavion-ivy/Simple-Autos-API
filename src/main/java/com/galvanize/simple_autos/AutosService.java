@@ -13,4 +13,7 @@ public class AutosService {
     }
 
 
+    public Automobile addAuto(Automobile auto) {
+        return null;
+    }
 }
