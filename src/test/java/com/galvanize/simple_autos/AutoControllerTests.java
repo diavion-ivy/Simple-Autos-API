@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,7 +36,7 @@ public class AutoControllerTests {
             automobiles.add(new Automobile(1900+i, "Ford", "Mustang","AA88"+i));
         }
         when(autosService.getAutos()).thenReturn(new AutosList(automobiles));
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/autos"))
+        mockMvc.perform(get("/api/autos"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.automobiles", hasSize(5)));
@@ -43,7 +44,17 @@ public class AutoControllerTests {
 
 
     // returns 204 no autos found
+    @Test
+    void getAutos_noParams_none_returnsNoContent() throws Exception {
+        List<Automobile> automobiles = new ArrayList<>();
+        when(autosService.getAutos()).thenReturn(new AutosList(automobiles));
+        mockMvc.perform(get("/api/autos"))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
     // /api/autos?color=RED returns red cars
+
     // /api/autos?make=Ford returns ford cars
     // /api/autos?color=GREEN&make=Ford returns red cars
 
