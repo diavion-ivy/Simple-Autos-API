@@ -135,6 +135,14 @@ public class AutoControllerTests {
     }
 
     // returns NoContent(204) Auto not found
+    @Test
+    void getAuto_withVin_returnsNoContent() throws Exception {
+        when(autosService.getAuto(anyString())).thenReturn(null);
+        mockMvc.perform(get("/api/autos/NOTFOUND"))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
 
     //PATCH: /api/autos{vin}
     // returns patched automobile
