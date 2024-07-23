@@ -172,6 +172,16 @@ public class AutoControllerTests {
     }
 
     // returns bad request (400)
+    @Test
+    void updateAuto_withObject_returnBadRequ() throws Exception {
+        when(autosService.updateAuto(anyString(),anyString(),anyString())).thenThrow(InvalidAutoException.class);
+        mockMvc.perform(patch("/api/autos/NOTFOUND")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"color\":\"RED\",\"owner\":\"Ivy\"}"))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
 
     //DELETE: /api/autos{vin}
     // returns 202 delete request accepted
