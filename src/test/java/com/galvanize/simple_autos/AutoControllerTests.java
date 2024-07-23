@@ -99,7 +99,6 @@ public class AutoControllerTests {
 
     //POST: /api/autos
     // returns created automobiles
-
     @Test
     void addAuto_valid_returnAuto() throws Exception {
         Automobile automobile = new Automobile(1967, "Mustang", "Ford","AA88CC");
@@ -112,7 +111,6 @@ public class AutoControllerTests {
     }
 
     // returns error messages due to bad request (400)
-
     @Test
     void addAuto_badRequ_returns400() throws Exception {
         when(autosService.addAuto(any(Automobile.class))).thenThrow(InvalidAutoException.class);
@@ -126,6 +124,16 @@ public class AutoControllerTests {
 
     //GET: /api/autos{vin}
     // return requested automobile
+    @Test
+    void getAuto_withVin_returnsAuto() throws Exception {
+        Automobile automobile = new Automobile(1967, "Mustang", "Ford","AA88CC");
+        when(autosService.getAuto(anyString())).thenReturn(automobile);
+        mockMvc.perform(get("/api/autos/"+automobile.getVin()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("vin").value(automobile.getVin()));
+    }
+
     // returns NoContent(204) Auto not found
 
     //PATCH: /api/autos{vin}
