@@ -6,8 +6,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AutosServiceTest {
@@ -23,13 +27,19 @@ class AutosServiceTest {
     }
 
     @Test
-    void getAutos() {
+    void getAutos_noArg_returnslist() {
         AutosList autosList = autosService.getAutos();
         assertThat(autosList).isNotNull();
     }
 
     @Test
-    void testGetAutos() {
+    void getAutos_search_returnsList() {
+        Automobile automobile = new Automobile(1967, "Mustang", "Ford","AA88CC");
+        automobile.setColor("RED");
+        when(autosRepository.findColorContainsMakeContains(anyString(), anyString()))
+                .thenReturn(Arrays.asList(automobile));
+        AutosList autosList = autosService.getAutos("RED", "Ford");
+        assertThat(autosList).isNotNull();
     }
 
     @Test
