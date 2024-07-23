@@ -136,7 +136,7 @@ public class AutoControllerTests {
     // returns NoContent(204) Auto not found
     @Test
     void getAuto_withVin_returnsNoContent() throws Exception {
-        when(autosService.getAuto(anyString())).thenReturn(null);
+        when(autosService.getAuto(anyString())).thenThrow(AutoNotFoundException.class);
         mockMvc.perform(get("/api/autos/NOTFOUND"))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -148,6 +148,8 @@ public class AutoControllerTests {
     @Test
     void updateAuto_withObject_returnsAuto() throws Exception {
         Automobile automobile = new Automobile(1967, "Mustang", "Ford","AA88CC");
+        automobile.setColor("RED");
+        automobile.setOwner("Ivy");
         when(autosService.updateAuto(anyString(),anyString(),anyString())).thenReturn(automobile);
         mockMvc.perform(patch("/api/autos/"+automobile.getVin())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -159,6 +161,16 @@ public class AutoControllerTests {
     }
 
     // return NoContent(204) auto not found
+    @Test
+    void updateAuto_withObject_returnNoContent() throws Exception {
+        when(autosService.updateAuto(anyString(),anyString(),anyString())).thenThrow(AutoNotFoundException.class);
+        mockMvc.perform(patch("/api/autos/NOTFOUND")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"color\":\"RED\",\"owner\":\"Ivy\"}"))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
     // returns bad request (400)
 
     //DELETE: /api/autos{vin}

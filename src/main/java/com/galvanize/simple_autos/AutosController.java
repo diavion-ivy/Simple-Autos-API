@@ -33,15 +33,17 @@ public class AutosController {
     @GetMapping("/api/autos/{vin}")
     public ResponseEntity<Automobile> getAuto(@PathVariable String vin) {
         Automobile auto = autosService.getAuto(vin);
-        return auto == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(auto);
+//        return auto == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(auto);
+        return ResponseEntity.ok(auto);
     }
     @PatchMapping("/api/autos/{vin}")
     public Automobile updateAuto(@PathVariable String vin, @RequestBody UpdateOwnerRequest update) {
-        Automobile automobile = autosService.updateAuto(vin, update.getColor(), update.getOwner());
-        automobile.setColor(update.getColor());
-        automobile.setOwner(update.getOwner());
-        return automobile;
+        return autosService.updateAuto(vin, update.getColor(), update.getOwner());
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void noContent(AutoNotFoundException e) {}
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
