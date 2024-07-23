@@ -41,6 +41,12 @@ public class AutosController {
         return autosService.updateAuto(vin, update.getColor(), update.getOwner());
     }
 
+    @DeleteMapping("/api/autos/{vin}")
+    public ResponseEntity deleteAuto(@PathVariable String vin) {
+        autosService.deleteAuto(vin);
+        return ResponseEntity.accepted().build();
+    }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void noContent(AutoNotFoundException e) {}
