@@ -1,12 +1,30 @@
 package com.galvanize.simple_autos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+
+import java.util.Date;
+
+
+@SuppressWarnings("TextBlockMigration")
+@Entity
+@Table(name =  "automobiles")
 public class Automobile {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(name =  "model_year")
     private int year;
     private String make;
     private String model;
     private String color;
+    @Column(name = "owner_name")
     private String owner;
+    @JsonFormat(pattern = "MM/DD/YYYY")
+    private Date purchaseDate;
     private String vin;
+
+    public Automobile() {
+    }
 
     public Automobile(int year, String model, String make, String vin) {
         this.year = year;
