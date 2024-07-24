@@ -20,7 +20,7 @@ public class AutosService {
     };
 
     public AutosList getAutos(String color, String make) {
-        List<Automobile> automobiles = autosRepository.findColorContainsMakeContains(color,make);
+        List<Automobile> automobiles = autosRepository.findByColorContainsAndMakeContains(color,make);
                 if(!automobiles.isEmpty()){
                     return new AutosList(automobiles);
                 }
