@@ -82,4 +82,26 @@ public class Automobile {
     public void setVin(String vin) {
         this.vin = vin;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Automobile{" +
+                "id=" + id +
+                ", year=" + year +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", color='" + color + '\'' +
+                ", owner='" + owner + '\'' +
+                ", purchaseDate=" + purchaseDate +
+                ", vin='" + vin + '\'' +
+                '}';
+    }
 }
