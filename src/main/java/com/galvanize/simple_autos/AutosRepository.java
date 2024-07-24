@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface AutosRepository extends JpaRepository<Automobile, Long> {
-    List<Automobile> findColorContainsMakeContains(String color, String make);
+    List<Automobile> findByColorContainsAndMakeContains(String color, String make);
     Optional<Automobile> findByVin(String vin);
 }

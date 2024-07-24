@@ -39,7 +39,7 @@ class AutosServiceTest {
     void getAutos_search_returnsList() {
         Automobile automobile = new Automobile(1967, "Mustang", "Ford","AA88CC");
         automobile.setColor("RED");
-        when(autosRepository.findColorContainsMakeContains(anyString(), anyString()))
+        when(autosRepository.findByColorContainsAndMakeContains(anyString(), anyString()))
                 .thenReturn(Arrays.asList(automobile));
         AutosList autosList = autosService.getAutos("RED", "Ford");
         assertThat(autosList).isNotNull();
