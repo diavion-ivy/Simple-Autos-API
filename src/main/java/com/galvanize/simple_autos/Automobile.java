@@ -1,6 +1,7 @@
 package com.galvanize.simple_autos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
 @SuppressWarnings("TextBlockMigration")
 @Entity
 @Table(name =  "automobiles")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Automobile {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
